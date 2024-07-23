@@ -1,0 +1,25 @@
+{
+  "name": "proj-social-gen-backend",
+  "version": "0.0.1",
+  "description": "The backend of the open source project named proj social gen",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mateus-Felipe/project-social-gen.git"
+  },
+  "keywords": [
+    "nodejs",
+    "ai",
+    "python",
+    "ia"
+  ],
+  "author": "Mateus Felipe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mateus-Felipe/project-social-gen/issues"
+  },
+  "homepage": "https://github.com/Mateus-Felipe/project-social-gen#readme"
+}
