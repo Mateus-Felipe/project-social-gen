@@ -39,7 +39,7 @@ export default function Post() {
                             {/* Instagram */}
                             <Title style="mdlg:hidden mb-5" >Preview your post!</Title>
                             <PostExample
-                                style="!mdlg:w-10/12 !w-11/12"
+                                style="!mdlg:w-10/12 !w-11/12 bg-white"
                                 profile={profileInput}
                                 humor={humor}
                             />
@@ -120,9 +120,7 @@ export default function Post() {
                                         onClick={() => setLoading(true)}
                                         className="shadow-custom border-r-2 border-b-2 border-black/20 bg-blue-600 p-4 text-white w-full text-3xl rounded-2xl font-bold">Generate ☆</button>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>

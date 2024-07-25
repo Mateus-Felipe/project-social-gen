@@ -11,7 +11,7 @@ export default function Title({ children, style, color }: TitleProps) {
     return (
         <div>
             <h1
-                className={` font-bold text-2xl ${style} `}
+                className={` font-bold mdlg:text-3xl text-2xl ${style} `}
             > {children} </h1>
         </div>
     );
