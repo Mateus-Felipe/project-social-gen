@@ -4,6 +4,11 @@ backend/node_modules
 backend/.env
 backend/yarn.lock
 
+backend/pythonapi/venv
+backend/pythonapi/tsts.json
+backend/pythonapi/src/__pycache__
+backend/pythonapi/__pycache__
+
 # dependencies
 /node_modules
 /.pnp

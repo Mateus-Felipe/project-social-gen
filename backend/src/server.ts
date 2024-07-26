@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 
 app.use(router);
+app.use(routerLogged);
 
 const port = 4000;
 app.listen(port, () => {

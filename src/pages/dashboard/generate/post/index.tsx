@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Image from "next/image";
 import { useState } from "react";
 import "@/app/globals.css";
-import arrow from "../../../../../public/icons/up-arrow-svgrepo-com.svg"
+import arrow from "@/images/icons/up-arrow.svg"
 import witcher from '@/images/a-witcher-in-a-river-bg.jpg'
 import Link from "next/link";
 import PostExample from "@/components/PostExample";

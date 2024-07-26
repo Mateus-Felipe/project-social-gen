@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import witcher from "@/images/a-witcher-in-a-river-bg.jpg"
+import profile from "@/images/icons/user-avatar-profile.svg"
 import { useEffect, useLayoutEffect, useState } from "react";
 
 interface postProps {
@@ -18,7 +19,13 @@ export default function PostExample({ profile: profileInput, humor, style, loadi
     return (
         <div className={` shadow-custom border-[2px] border-gray w-8/12 rounded-xl ${style}`}>
             <div className="flex flex-row items-center p-3 ">
-                <div className="w-8 h-8 rounded-full bg-gray-500 animate-pulse " />
+                <div className="w-8 h-8 rounded-full bg-gray-500 animate-pulse flex items-center justify-center overflow-hidden">
+                    <Image
+                        src={profile}
+                        alt="user profile photo"
+                        className="w-full animate-pulse"
+                    />
+                </div>
                 <p className={`ml-3 font-bold ${loading && 'animate-pulse'}`} >{profileInput ? profileInput : '@your_profile'}</p>
             </div>
             <div className="mdlg:border-[1px] mdlg:border-black/30 h-[435px] bg mdlg:mx-2 flex items-center justify-center">
