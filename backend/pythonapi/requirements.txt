@@ -1,5 +1,5 @@
-flask
 langchain
 langchain-community
 duckduckgo-search
 langchain_mistralai
+flask

@@ -1,21 +1,95 @@
 import Header from "@/components/Header";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "@/app/globals.css";
 import arrow from "@/images/icons/up-arrow.svg"
-import witcher from '@/images/a-witcher-in-a-river-bg.jpg'
 import Link from "next/link";
 import PostExample from "@/components/PostExample";
 import Title from "@/components/Title";
+import axios from "axios";
+import { getCookie } from "@/services/cookies";
+import { headers } from "next/headers";
+import { profile } from "console";
+import { useRouter } from "next/router";
 
 export default function Post() {
-    const [themeInput, setThemeInput] = useState<string>('');
-    const [profileInput, setProfileInput] = useState<string>('');
+    const [themeInput, setThemeInput] = useState('')
+    const [profileInput, setProfileInput] = useState('')
     const [humor, setHumor] = useState('helpful')
     const [pageQnt, setPageQnt] = useState("1")
     const [context, setContext] = useState('')
-    const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [successMessage, setSuccessMessage] = useState('');
+    const [postsData, setPostsData] = useState<any>()
+    const router = useRouter()
 
+
+    const handleCreate = async () => {
+        if (!themeInput || !humor || !pageQnt || !context) {
+            return;
+        }
+        setLoading(true);
+        var auth = [getCookie('iduser').replace(/"/g, ""), getCookie('tkuser').replace(/"/g, "")]
+        await axios.post('http://localhost:4000/api/logged/post/new', {
+            "contextPost": context, "typeContent": humor, "pages": pageQnt, "theme": themeInput, "profile": profileInput ? profileInput : ''
+        }, {
+            headers: {
+                'created_by': auth[0],
+                'Authorization': `Bearer ${auth[1]}`
+            }
+        }).then(async res => {
+            loadPosts().then(() => {
+                setSuccessMessage('Your post was generated successfully!!!')
+                // document.getElementById(res.data.newPost.id)?.scrollIntoView()
+                router.push(`/dashboard/generate/post#${res.data.newPost.id}`);
+                setTimeout(() => {
+                    setLoading(false);
+                    setSuccessMessage('');
+                }, 3000)
+            })
+        }).catch(err => {
+            if (err.code == "ERR_NETWORK") {
+                setErrorMsg("An error occurred... Try again.")
+            }
+            else if (err.response.data.message) {
+                setErrorMsg(err.response.data.message);
+            } else {
+                setErrorMsg("An error occurred... Try again.")
+            }
+        })
+    }
+
+    const loadPosts = async () => {
+        var auth = [getCookie('iduser').replace(/"/g, ""), getCookie('tkuser').replace(/"/g, "")]
+        await axios.get('http://localhost:4000/api/logged/post/get', {
+            headers: {
+                'created_by': auth[0],
+                'Authorization': `Bearer ${auth[1]}`
+            }
+        }).then(response => {
+            if (response.data.data.length > 0) {
+                setPostsData(response.data.data)
+            } else {
+                setPostsData(null);
+            }
+            return true;
+        }).catch(err => {
+            console.log(err);
+            if (err.code == "ERR_NETWORK") {
+                setErrorMsg("Something bad happened!");
+            } else if (err.response.data.message) {
+                setErrorMsg(err.response.data.message);
+            } else {
+                setErrorMsg(err.response.data.message);
+            }
+            return true;
+        })
+        return;
+    }
+    useEffect(() => {
+        loadPosts();
+    }, [])
 
     return (
         <div>
@@ -39,7 +113,7 @@ export default function Post() {
                             {/* Instagram */}
                             <Title style="mdlg:hidden mb-5" >Preview your post!</Title>
                             <PostExample
-                                style="!mdlg:w-10/12 !w-11/12 bg-white"
+                                style="mdlg:w-7/12 w-11/12 bg-white"
                                 profile={profileInput}
                                 humor={humor}
                             />
@@ -54,6 +128,7 @@ export default function Post() {
                             <div className="flex flex-col items-start justify-center w-full mdlg:ml-9">
                                 <label htmlFor="firstInput" className="font-bold" >A theme for your post*</label>
                                 <input
+                                    placeholder="New AI technology"
                                     id="firstInput"
                                     maxLength={80}
                                     value={themeInput} onChange={v => setThemeInput(v.target.value)
@@ -81,6 +156,7 @@ export default function Post() {
 
                                 <label htmlFor="secondInput" className="font-bold" >Your @profile (optional)</label>
                                 <input
+                                    placeholder="dev.simples"
                                     id="secondInput"
                                     maxLength={30}
                                     value={profileInput} onChange={v => setProfileInput(v.target.value)
@@ -95,17 +171,18 @@ export default function Post() {
                                     id="thirdInput"
                                     className="border-2 border-color-black/35 w-full rounded-2xl p-1.5 mb-5"
                                 >
-                                    <option>Helpful</option>
-                                    <option>Funny</option>
-                                    <option>Hilarius</option>
-                                    <option>News</option>
-                                    <option>Informative</option>
-                                    <option>Serius</option>
+                                    <option value="Helpful" >Helpful</option>
+                                    <option value="Funny">Funny</option>
+                                    <option value="Hilarious">Hilarious</option>
+                                    <option value="News">News</option>
+                                    <option value="Informative" >Informative</option>
+                                    <option value="Serious" >Serious</option>
                                 </select>
 
                                 <label htmlFor="fourInput" className="font-bold" >You can give a context for your post here</label>
                                 <textarea
                                     id="fourInput"
+                                    placeholder="Let'ts talk about the new AI technology and how it can change the world."
                                     value={context}
                                     onChange={v => setContext(v.target.value)}
                                     maxLength={110}
@@ -117,7 +194,7 @@ export default function Post() {
 
                                 <div className="w-full flex justify-center items-center mt-10">
                                     <button
-                                        onClick={() => setLoading(true)}
+                                        onClick={() => handleCreate()}
                                         className="shadow-custom border-r-2 border-b-2 border-black/20 bg-blue-600 p-4 text-white w-full text-3xl rounded-2xl font-bold">Generate ☆</button>
                                 </div>
                             </div>
@@ -129,17 +206,21 @@ export default function Post() {
             <div className="flex flex-wrap items-center justify-center mt-20 mb-10 flex-col w-full">
                 <Title style="mb-10">Your last posts</Title>
                 <div className="flex flex-wrap mdlg:flex-row flex-col items-center justify-evenly w-11/12">
-                    <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " />
-                    <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " />
-                    <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " />
-                    <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " />
-                    <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " />
+                    {
+                        postsData && postsData.length > 0 && postsData.map((value: any) => (
+                            <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " id={value.id} description={value.description} profile={value.profile} pages={value.pages} />
+                        ))
+                    }
+                    {/* <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " /> */}
+                    {/* <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " /> */}
+                    {/* <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " /> */}
+                    {/* <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " /> */}
                 </div>
             </div>
             {/* LOADING VIEW */}
             <div className={` ${loading ? 'flex opacity-[0.97]' : 'hidden opacity-0'} fixed top-0 left-0 w-full h-screen z-50 bg-gradient-to-br
-            from-red-500 to-yellow-700 items-center justify-center`}>
-                <p className="font-bold text-white">Your post is being generated! ❤️</p>
+            ${successMessage ? 'from-green-300' : 'from-red-500'} ${successMessage ? 'to-blue-400' : 'to-yellow-700'} items-center justify-center`}>
+                <p className="font-bold text-white">{successMessage ? successMessage : 'Your post is being generated! ❤️'}</p>
             </div>
         </div>
     );

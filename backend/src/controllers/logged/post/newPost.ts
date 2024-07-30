@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
-import { json } from "stream/consumers";
+import prismaClient from "../../../prisma";
 
 const newPost = async (req: Request, res: Response) => {
     const { theme, pages, profile, typeContent, contextPost } = req.body;
@@ -19,16 +19,28 @@ const newPost = async (req: Request, res: Response) => {
     const text = `Theme for post: ${theme}; \n Pages: ${pages}; \n Profile: ${profile}; \n Humor: ${typeContent}; \n Post Context: ${contextPost}.`
     await axios.post('http://127.0.0.1:4500/process_text', {
         text
-    }).then(result => {
-        var text = result.data.response.output;
-        var newText = `{${text.replaceAll('\n', '').replaceAll(`'postdescription'`, `"postdescription"`).replace(`'page'`, `"page"`)
-            .replace(`['`, `["`). replace(`', '`, `", "`).replace(`']`, `"]`).replaceAll(`: '`, `: "`).replaceAll(`',`, `",`)
-        }}`;
+    }).then(async result => {
+        console.log(result.data)
+        var text = result.data.response;
+        var newText = JSON.parse(`{${text.replace(/\n/g, '').replace(/'postdescription'/g, `"postdescription"`).replace(/'page'/g, `"page"`)
+            .replace(/\['/g, `["`).replace(/', '/g, `", "`).replace(/']/g, `"]`).replace(/: '/g, `: "`).replace(/',/g, `",`)
+            }}`);
         console.log(newText);
-        console.log(JSON.parse(newText));
+        // console.log(req.userInfo);
+
+        const newPost = await prismaClient.post.create({
+            data: {
+                description: newText.postdescription,
+                profile: profile ? profile : '',
+                userId: req.userInfo?.id,
+                pages: newText.page
+            }
+        })
+
         return res.status(200).json({
             "message": "Everything ok",
-            "text": JSON.parse(newText)
+            "text": newText,
+            newPost
         })
     }).catch(err => {
         console.log(err);

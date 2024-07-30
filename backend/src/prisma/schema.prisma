@@ -21,12 +21,14 @@ model User {
 }
 
 model Post {
-    id          String @id @default(uuid())
-    image       String @db.VarChar(255)
-    description String @db.VarChar(300)
-    profile     String @db.VarChar(100)
+    id          String   @id @default(uuid())
+    image       String?  @db.VarChar(255)
+    description String   @db.VarChar(1000)
+    profile     String?  @db.VarChar(100)
+    pages       String[]
 
-    userId User @relation(fields: [id], references: [id])
+    userId      String
+    user        User     @relation(fields: [userId], references: [id])
 
     created_at DateTime? @default(now())
     updated_at DateTime  @default(now()) @updatedAt

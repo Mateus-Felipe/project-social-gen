@@ -15,11 +15,14 @@ const signup = async (req: Request, res: Response) => {
             login
         }
     }).then(result => {
-        if (result?.login) {
+        if (!result) {
             return res.status(400).json({
-                "message": "Error: User already exist"
+                "message": "Internal Server Error FdUser1"
             })
         }
+        return res.status(400).json({
+            "message": "Error: User already exist"
+        })
     }).catch(err => {
         console.log(err);
         return res.status(400).json({

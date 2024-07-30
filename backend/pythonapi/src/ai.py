@@ -16,10 +16,10 @@ Theme for post: AI. Pages: 2. Profile: @mateusfelipe.x. Humor: Helpful. Post Con
 
 def process_text(text):
     llm = ChatMistralAI(
-        api_key="7IzG6eMFbMsY7KUuSPvURr2ovYfpOd7k",
-        model_name="open-mixtral-8x22b",
+        api_key="",
+        model_name="mistral-large-2407",
         temperature=0,
-        max_tokens=512,
+        max_tokens=1000,
         top_p=1,
         # verbose=True,
         n_ctx=10000
@@ -42,7 +42,7 @@ def process_text(text):
     Theme for post: the theme of the content of the post.
     Pages: the quantity of pages. you will create some text for each page.
     Profile: you can use the profile if you want.
-    Humor: The humor of the content. humor can be: Helpful, Funny, Hilarius, News, Informative or Serious.
+    Humor: The humor of the content. humor can be: Helpful, Funny, Hilarious, News, Informative or Serious.
     Post Context: The context to help to create the post.
     '
     
@@ -52,27 +52,28 @@ def process_text(text):
     {tools}
     If the post need some information that you do not know, use a tool to search for a information.
     To use a tool, please use the following format:
-    ```
+    
     Thought: Do I need to use a tool? Yes
-    Action: the action to take, should be one of [{tool_names}]. Ever use the 'Action Input + tool name' to call for a tool.
-    Action Input: the input to the action
+    Action: the action to take, should be one of [{tool_names}]. Ever use the 'Action Input + tool name' to call for a tool and await for it answer.
+    Action Input: the input to the action. call it and await it answer
     Observation: the result of the action
-    ```
-    When you have the text post for the Human, or if you do not need to use a tool, you MUST use the format:
-    ```
+
+    When you have the text post for the Human, you MUST use the exactly format:
+
     Thought: Do I need to use a tool? No
     Final Answer: [your response here]
-    ```
-    Your final answer will have:
-    ```
-    postdescription: the post description with all the hashtags if needed. (post description is a text)
-    page: an array, where each index is a text for each page (page is a array with texts)
-    ```
-    You return final answer need follow the format like the exactly following example:
-    ```
-    [postdescription, page]
-    ```
-    You need chain the final answer
+
+    the max characters of the text of each page in the response is 550.
+    Your response will have:
+    
+    postdescription: the post description, the post description is a big text with all the information together reformulated into a unique text and with all the hashtags if needed. (post description is a text, hashtags are lower case. The max characters of the postdescription is 900)
+    page: an array, where each index is a text for each page (page is a array with texts. the max characters of the text of each page is 550.)
+    
+    You response final answer need follow the format like the exactly following example:
+    
+    Thought: Do I need to use a tool? No
+    Final Answer: "postdescription": the content here, "page": [the content here] (it's a json format)
+    
     Begin!
     New input: {input}
     {agent_scratchpad}'''
@@ -88,8 +89,8 @@ def process_text(text):
         "input": f"{question}"
     })
     # print("------------------------------------------------------------\n------------------------------------------------------------\n------------------------------------------------------------")
-    # print(response)
-    response_parset = parse_response(response.get('output'))
+    print(response)
+    response_parset = response.get('output')
     print("------------------------------------------------------------\n------------------------------------------------------------\n------------------------------------------------------------")
     print(response_parset)
     return response_parset
