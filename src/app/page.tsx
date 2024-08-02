@@ -13,7 +13,7 @@ export default function App() {
       // ...
       // Has Cookie ? Got to page Home : Go to Page Login
       // ...
-      router.push('/dashboard/home')
+      router.push('/home')
     }
     loadAuth()
   }, [])

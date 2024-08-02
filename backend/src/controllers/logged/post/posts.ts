@@ -20,7 +20,7 @@ const posts = async (req: Request, res: Response) => {
     else {
         response = await prismaClient.post.findMany({
             where: {
-                userId: req.userInfo?.id
+                userId: req.userInfo?.id,
             }, orderBy: {
                 created_at: 'desc'
             }

@@ -98,8 +98,8 @@ export default function Post() {
                 <Header />
                 <div className="flex flex-col items-center justify-center w-full">
                     <div className="shadow-custom relative
-                    flex mdlg:flex-row flex-col justify-center items-center
-                    border-2 rounded-3xl bg-white w-11/12 mdlg:h-[690px] h-auto my-32 py-16 mdlg:py-0 ">
+                    flex lg:flex-row flex-col justify-center items-center
+                    border-2 rounded-3xl bg-white w-11/12 lg:h-[690px] h-auto my-32 py-16 lg:py-0 ">
                         <Link href={"/dashboard/home"} className="absolute -top-7 left-5 z-10 flex flex-row items-center justify-center hover:text-blue-500 hover:font-bold cursor-pointer">
                             <Image
                                 width={20}
@@ -109,11 +109,11 @@ export default function Post() {
                             />
                             <p>Return to Home</p>
                         </Link>
-                        <div className="mdlg:w-[48%] mdlg:flex-row flex-col w-full h-full flex items-center justify-center">
+                        <div className="lg:w-[48%] mdlg:flex-row flex-col w-full h-full flex items-center justify-center">
                             {/* Instagram */}
                             <Title style="mdlg:hidden mb-5" >Preview your post!</Title>
                             <PostExample
-                                style="mdlg:w-7/12 w-11/12 bg-white"
+                                style="mdlg:w-[450px] sm:w-[400px] w-full bg-white"
                                 profile={profileInput}
                                 humor={humor}
                             />

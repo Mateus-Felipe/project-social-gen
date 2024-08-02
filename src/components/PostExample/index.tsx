@@ -53,18 +53,18 @@ export default function PostExample({ profile: profileInput, humor, style, loadi
                 </div>
                 <p className={`ml-3 font-bold ${loading && 'animate-pulse'}`} >{profileInput ? profileInput : '@your_profile'}</p>
             </div>
-            <div className="mdlg:border-[1px] mdlg:border-black/30 h-[435px] bg mdlg:mx-2 flex items-center justify-center">
+            <div className="mdlg:border-[1px] mdlg:border-black/30 sm:h-[435px] h-auto bg mdlg:mx-2 flex items-center justify-center">
                 {
                     loading ?
                         <div
                             className={`bg-gray-400 mdlg:w-full w-11/12 h-full animate-pulse transition-all`}
                         />
                         :
-                        <div className="relative flex items-center justify-between w-full h-full">
+                        <div className="relative flex items-center justify-between w-full sm:h-full h-auto">
                             <Image
                                 src={witcher}
                                 alt="A witcher in a river"
-                                className="mdlg:border-[1px] mdlg:border-black/30 h-full w-full"
+                                className="mdlg:border-[1px] mdlg:border-black/30 sm:h-full h-auto w-full"
                             />
                             {
                                 pages && pages.length > 0 &&

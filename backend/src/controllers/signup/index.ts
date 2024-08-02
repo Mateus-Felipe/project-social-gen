@@ -14,33 +14,29 @@ const signup = async (req: Request, res: Response) => {
         where: {
             login
         }
-    }).then(result => {
-        if (!result) {
+    }).then(async result => {
+        if (result) {
             return res.status(400).json({
-                "message": "Internal Server Error FdUser1"
+                "message": "Error: User already exist"
             })
         }
-        return res.status(400).json({
-            "message": "Error: User already exist"
+        const passwordHash = await hash(req.body.password, 8);
+
+        const newUser = await prismaClient.user.create({
+            data: {
+                name, login, password: passwordHash, idiom, region: 'brazil'
+            }
+        })
+
+        return res.status(200).json({
+            "message": "User created with success!",
+            result: newUser
         })
     }).catch(err => {
         console.log(err);
         return res.status(400).json({
             "message": "Internal Server Error FdUser1"
         })
-    })
-
-    const passwordHash = await hash(req.body.password, 8);
-
-    const newUser = await prismaClient.user.create({
-        data: {
-            name, login, password: passwordHash, idiom, region: 'brazil'
-        }
-    })
-
-    return res.status(200).json({
-        "message": "User created with success!",
-        result: newUser
     })
 
 }

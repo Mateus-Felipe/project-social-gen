@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
 
 body {
+  box-sizing: border-box;
   background-color: rgb(247, 247, 227);
 
 }
