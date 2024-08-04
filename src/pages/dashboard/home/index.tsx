@@ -10,7 +10,7 @@ export default function Home() {
     const router = useRouter()
     const services = [
         { name: "Generate complete post", description: "Let's generate the entire post for you page in your social media", image: null, url: "/dashboard/generate/post" },
-        { name: "Generate description", description: "Use the AI to write your description", image: null, url: "/dashboard/generate/text" },
+        { name: "See and edit created post", description: "Edit your created posts", image: null, url: "/dashboard/generate/result" },
         { name: "Generate ", description: "Use the AI to write your description", image: null, url: "/dashboard/generate/text" },
         { name: "New tools are comming soon", description: "I hope you enjoy ours features. Some news are comming for you keep publishing", image: null, url: null },
     ]

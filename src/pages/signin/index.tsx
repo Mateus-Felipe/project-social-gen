@@ -89,7 +89,7 @@ export default function Signin() {
                 <p className={`text-left drop-shadow-2xl-strong-two-light ${password.length < 8 ? 'underline font-bold' : 'font-normal'} `}>{password.length < 8 ? "The field password is empty or too short" : ''}</p>
 
                 <Link className="font-bold text-center w-full text-2xl drop-shadow-2xl-strong-two-light flex flex-row justify-center" href="/signup">Don't have an account?&nbsp;<u className="text-yellow-theme">Sign Up</u>&nbsp;now and start creating!</Link>
-                <p className="font-bold text-2xl text-center mt-16 w-full" >{errorMsg}</p>
+                <p className="font-bold text-2xl text-center mt-16 w-full" >{errorMsg && errorMsg}</p>
             </div>
             {
                 login.length > 2 && password.length >= 8 ?

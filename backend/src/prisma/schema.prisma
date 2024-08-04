@@ -14,21 +14,21 @@ model User {
     password String  @db.VarChar(200)
     idiom    String  @db.VarChar(100)
     region   String  @db.VarChar(100)
-    Post     Post[]
+    // Post     Post[]
 
     created_at DateTime? @default(now())
     updated_at DateTime  @default(now()) @updatedAt
 }
 
 model Post {
-    id          String   @id @default(uuid())
-    image       String?  @db.VarChar(255)
-    description String   @db.VarChar(1000)
-    profile     String?  @db.VarChar(100)
-    pages       String[]
+    id          String  @id @default(uuid())
+    image       String? @db.VarChar(255)
+    description String  @db.VarChar(1000)
+    profile     String? @db.VarChar(100)
+    pages       Json[]
 
     userId String @db.VarChar(100)
-    user   User   @relation(fields: [userId], references: [id])
+    // user   User   @relation(fields: [userId], references: [id])
 
     created_at DateTime? @default(now())
     updated_at DateTime  @default(now()) @updatedAt

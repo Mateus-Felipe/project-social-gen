@@ -94,7 +94,7 @@ export default function Signup() {
                 </p>
                 <p className={`text-left drop-shadow-2xl-strong-two-light ${password.length < 8 ? 'underline font-bold' : 'font-normal'} `}>{email.length < 5 ? "The field email is empty" : ''}</p>
                 <Link className="text-center w-full text-2xl font-bold drop-shadow-2xl-strong-two-light flex flex-row justify-center" href="/signin">Already have an account?&nbsp;<u className="text-yellow-theme">Sign In!</u></Link>
-                <p className="text-warning font-bold text-2xl text-center mt-16 w-full drop-shadow-2xl-strong-two-light" >{errorMsg}</p>
+                <p className="font-bold text-2xl text-center mt-16 w-full drop-shadow-2xl-strong-two-light" >{errorMsg && errorMsg}</p>
             </div>
             {
                 name.length > 2 && email.length > 2 && password.length >= 8 ?

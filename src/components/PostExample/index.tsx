@@ -5,6 +5,9 @@ import arrow from "@/images/icons/up-arrow.svg"
 import profile from "@/images/icons/user-avatar-profile.svg"
 import { useEffect, useLayoutEffect, useState } from "react";
 
+interface pagesProps {
+    colorValue: string, colorOpacity: number, text: string
+}
 interface postProps {
     profile?: string
     humor?: string
@@ -13,7 +16,7 @@ interface postProps {
     profile_url?: string
     image_url?: string
     description?: string
-    pages?: string[]
+    pages?: pagesProps[]
     id?: string
 }
 
@@ -42,7 +45,7 @@ export default function PostExample({ profile: profileInput, humor, style, loadi
     }
 
     return (
-        <div id={id} className={` shadow-custom border-[2px] border-gray w-8/12 rounded-xl ${style}`}>
+        <div id={id} className={` shadow-custom border-[2px] border-gray w-8/12 bg-white rounded-xl ${style}`}>
             <div className="flex flex-row items-center p-3 ">
                 <div className="w-8 h-8 rounded-full bg-gray-500 animate-pulse flex items-center justify-center overflow-hidden">
                     <Image
@@ -78,7 +81,7 @@ export default function PostExample({ profile: profileInput, humor, style, loadi
                                                 className="-rotate-90 w-5 bg-white rounded-full"
                                             />
                                         </div>
-                                        <p className={`w-10/12 text-white font-bold z-20 ${currentPage == 0 ? 'ml-5' : ''} `}>{pages[currentPage] ? pages[currentPage] : ''}</p>
+                                        <p className={`w-10/12 text-white font-bold z-20 ${currentPage == 0 ? 'ml-5' : ''} `}>{pages[currentPage] ? pages[currentPage].text : ''}</p>
                                         <div className={`bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer z-20 ${currentPage == (pages.length - 1) ? 'opacity-0 cursor-default' : 'cursor-pointer'} `} onClick={() => changeImage("right")}>
                                             <Image
                                                 alt="arrow"
@@ -90,7 +93,7 @@ export default function PostExample({ profile: profileInput, humor, style, loadi
                                     : pages && pages.length == 1 &&
                                     <div className="flex w-full items-center justify-between px-3 absolute h-full">
                                         <div className="absolute h-full w-full bg-black/60 left-0 top-0" />
-                                        <p className="w-10/12 text-white font-bold z-20">{pages[currentPage] ? pages[currentPage] : ''}</p>
+                                        <p className="w-10/12 text-white font-bold z-20">{pages[currentPage] ? pages[currentPage].text : ''}</p>
                                     </div>
                             }
                         </div>

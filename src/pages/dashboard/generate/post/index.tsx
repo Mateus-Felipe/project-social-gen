@@ -26,6 +26,7 @@ export default function Post() {
 
 
     const handleCreate = async () => {
+        return router.push({ pathname: '/dashboard/generate/result', query: { 'await': true } });
         if (!themeInput || !humor || !pageQnt || !context) {
             return;
         }
@@ -99,7 +100,7 @@ export default function Post() {
                 <div className="flex flex-col items-center justify-center w-full">
                     <div className="shadow-custom relative
                     flex lg:flex-row flex-col justify-center items-center
-                    border-2 rounded-3xl bg-white w-11/12 lg:h-[690px] h-auto my-32 py-16 lg:py-0 ">
+                    border-2 rounded-3xl bg-white w-11/12 lg:h-[690px] h-auto my-32 py-16 lg:py-0">
                         <Link href={"/dashboard/home"} className="absolute -top-7 left-5 z-10 flex flex-row items-center justify-center hover:text-blue-500 hover:font-bold cursor-pointer">
                             <Image
                                 width={20}
@@ -107,7 +108,7 @@ export default function Post() {
                                 src={arrow}
                                 alt="arrow"
                             />
-                            <p>Return to Home</p>
+                            <p className="font-bold text-white hover:text-blue-light-theme">Return to Home</p>
                         </Link>
                         <div className="lg:w-[48%] mdlg:flex-row flex-col w-full h-full flex items-center justify-center">
                             {/* Instagram */}
@@ -208,7 +209,7 @@ export default function Post() {
                 <div className="flex flex-wrap mdlg:flex-row flex-col items-center justify-evenly w-11/12">
                     {
                         postsData && postsData.length > 0 && postsData.map((value: any) => (
-                            <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " id={value.id} description={value.description} profile={value.profile} pages={value.pages} />
+                            <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " key={value.id} id={value.id} description={value.description} profile={value.profile} pages={value.pages} />
                         ))
                     }
                     {/* <PostExample style="mdlg:w-[28.5%] w-full mdlg:mx-1 mb-9 " /> */}

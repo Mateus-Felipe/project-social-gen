@@ -26,12 +26,19 @@ const newPost = async (req: Request, res: Response) => {
             .replace(/\['/g, `["`).replace(/', '/g, `", "`).replace(/']/g, `"]`).replace(/: '/g, `: "`).replace(/',/g, `",`)
             }}`);
         console.log(newText);
-        // console.log(req.userInfo);
+
+        // transform into object and set color value and color opacity
+        var oldPages = newText.page;
+        var newPages = [];
+        oldPages.map((v: any) => {
+            newPages.push({ colorValue: '#000', colorOpacity: 50, text: v });
+        })
 
         const newPost = await prismaClient.post.create({
             data: {
                 description: newText.postdescription,
                 profile: profile ? profile : '',
+                //@ts-ignore
                 userId: req.userInfo?.id,
                 pages: newText.page
             }

@@ -8,6 +8,7 @@ backend/pythonapi/venv
 backend/pythonapi/tsts.json
 backend/pythonapi/src/__pycache__
 backend/pythonapi/__pycache__
+notas.txt
 
 # dependencies
 /node_modules
