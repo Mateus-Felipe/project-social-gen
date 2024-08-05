@@ -6,7 +6,7 @@ import profile from "@/images/icons/user-avatar-profile.svg"
 import { useEffect, useLayoutEffect, useState } from "react";
 
 interface pagesProps {
-    colorValue: string, colorOpacity: number, text: string
+    colorValue: string, colorOpacity: number, text: string, fontFamily: string
 }
 interface postProps {
     profile?: string

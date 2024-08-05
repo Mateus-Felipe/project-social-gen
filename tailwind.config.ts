@@ -7,6 +7,10 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      'arial': ['Arial'],
+      'helvetica': ['Helvetica'],
+    },
     screens: {
       'lg': '1300px',
       'mdlg': '1000px',

@@ -31,7 +31,7 @@ const newPost = async (req: Request, res: Response) => {
         var oldPages = newText.page;
         var newPages = [];
         oldPages.map((v: any) => {
-            newPages.push({ colorValue: '#000', colorOpacity: 50, text: v });
+            newPages.push({ colorValue: '#000', colorOpacity: 50, text: v, fontFamily: 'Arial' });
         })
 
         const newPost = await prismaClient.post.create({

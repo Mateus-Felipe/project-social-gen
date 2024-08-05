@@ -1,5 +1,3 @@
-import Header from "@/components/Header";
-import Title from "@/components/Title";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "@/app/globals.css";
@@ -12,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { setCookie } from "@/services/cookies";
+import AOS from 'aos'
+import 'aos/dist/aos.css';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
@@ -45,6 +45,8 @@ export default function Home() {
             }).catch(err => {
                 if (err.code == "ERR_NETWORK") {
                     setErrorMsg("Something bad happened!");
+                } else if (err.code == "ERR_BAD_REQUEST") {
+                    setErrorMsg("Something bad happened!");
                 } else if (err.response.data.message) {
                     setErrorMsg(err.response.data.message);
                 } else {
@@ -77,16 +79,20 @@ export default function Home() {
 
     useEffect(() => {
         setLoading(false);
+        AOS.init({
+            startEvent: 'DOMContentLoaded',
+            offset: 90,
+        });
     }, []);
     return (
         <div className="bg-blue-dark-theme relative">
-            <div className="absolute right-5 md:top-5 top-2">
+            <div className="absolute right-5 md:top-5 top-2 z-20">
                 <ButtonTheme text="User Panel" style="!text-xl !md:w-[155px] !w-[200px] !bg-white !text-black" toDo="login" />
             </div>
             <div className="w-full md:h-screen h-[95vh] bg-no-repeat bg-cover flex md:flex-row flex-col items-center justify-center md:py-0"
                 style={{
                     backgroundImage: `url(${bgOneHome.src})`
-                }}
+                }} data-aos="fade-in"
             >
                 <div className="md:w-[40%] w-11/12 text-white mdlg:ml-28 mt-4 md:text-left text-center">
                     {/* Text */}
@@ -100,7 +106,7 @@ export default function Home() {
                     />
                 </div>
             </div>
-            <div className="w-full -mt-[55px] flex items-center justify-center relative overflow-hidden pb-16 delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
+            <div className="w-full -mt-[55px] flex items-center justify-center relative overflow-hidden pb-16" data-aos="fade-up">
                 <div className="flex items-center md:flex-row flex-col justify-center rounded-3xl w-10/12 md:p-7 py-2 z-20 
                 bg-gradient-to-br from-orange-light-theme to-red-theme text-white font-bold">
                     <p className="mdlg:text-[1.75rem] text-xl text-center">Text Generation</p>
@@ -113,21 +119,21 @@ export default function Home() {
                     className="w-[110%] top-6/12 left-0 absolute bg-blue-dark-theme h-10 rounded-none blur-sm"
                 />
             </div>
-            <div className="w-full flex items-center justify-center flex-col">
+            <div className="w-full flex items-center justify-center flex-col" data-aos="fade-up">
                 <div className="w-full flex items-center justify-center mb-16">
                     <Image loading="lazy"
                         src={abstractPink} alt="Say goodbye to writer's block and hello to captivating posts. Our AI crafts engaging Social Media content based on your theme, mood, and context."
                         className="w-11/12 md:w-5/12 mdlg:ml-64"
                     />
                 </div>
-                <div className="w-full flex items-center justify-center pb-16 -mt-[7%]">
+                <div className="w-full flex items-center justify-center pb-16 -mt-[7%]" data-aos="fade-up">
                     <Image loading="lazy"
                         src={abstractYellow} alt="Craft posts that reflect your unique style. Simply input your theme, mood, and context, and watch our AI create personalized text that resonates with your audience."
                         className="w-11/12 md:w-5/12 mdlg:mr-64"
                     />
                 </div>
             </div>
-            <div className="bg-gradient-to-br from-yellow-theme to-red-light-theme w-full flex items-center justify-center md:flex-row flex-col py-16">
+            <div className="bg-gradient-to-br from-yellow-theme to-red-light-theme w-full flex items-center justify-center md:flex-row flex-col py-16" data-aos="fade-up">
                 <div className="md:w-[40%] w-9/12 flex items-center justify-center flex-col">
                     <p className="text-blue-theme font-bold text-2xl text-center">Boost your engagement rates with posts designed to capture attention. Our AI ensures your content is always polished and professional, helping you build a strong brand identity.</p>
                     <ButtonTheme style="w-full !text-2xl mt-5" />
@@ -141,27 +147,27 @@ export default function Home() {
             </div>
             <div className="flex items-center flex-row flex-wrap justify-center w-full mt-16 delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
                 <div className="flex items-center flex-row flex-wrap justify-start md:w-6/12 w-11/12">
-                    <div className="w-10/12 bg-white flex items-center justify-center p-5 rounded-full">
+                    <div className="w-10/12 bg-white flex items-center justify-center p-5 rounded-full" data-aos="fade-right">
                         <p className="text-black text-center font-bold italic ">“This AI tool has revolutionized my social media strategy! It's like having a personal copywriter available 24/7.”</p>
                     </div>
-                    <div className="md:ml-[25%] ml-[10%] mt-7 md:w-10/12 w-full bg-white flex items-center justify-center p-5 rounded-full">
+                    <div className="md:ml-[25%] ml-[10%] mt-7 md:w-10/12 w-full bg-white flex items-center justify-center p-5 rounded-full" data-aos="fade-left">
                         <p className="text-black text-center font-bold italic ">"I love how easy and fast it is to generate high-quality posts. It saves me so much time!"</p>
                     </div>
-                    <div className="w-10/12 mt-7 bg-white flex items-center justify-center p-5 rounded-full">
+                    <div className="w-10/12 mt-7 bg-white flex items-center justify-center p-5 rounded-full" data-aos="fade-right">
                         <p className="text-black text-center font-bold italic ">“The engagement on my posts has skyrocketed since I started using this tool. Highly recommend!”</p>
                     </div>
-                    <div className="md:ml-[25%] ml-[10%] my-7 md:w-10/12 w-full bg-white flex items-center justify-center p-5 rounded-full">
+                    <div className="md:ml-[25%] ml-[10%] my-7 md:w-10/12 w-full bg-white flex items-center justify-center p-5 rounded-full" data-aos="fade-left">
                         <p className="text-black text-center font-bold italic ">"This tool has been a game-changer for our content strategy. Our posts are now more engaging and professional than ever before!"</p>
                     </div>
                 </div>
             </div>
-            <div className="flex items-center justify-center flex-col mt-16">
+            <div className="flex items-center justify-center flex-col mt-16" data-aos="fade-in">
                 <h1 className="text-white font-bold text-4xl w-10/12 text-center">Ready to Elevate Your Instagram?</h1>
                 <p className="text-white w-10/12 text-center">Don't wait any longer. Transform your social media presence with our AI-powered content creator. Sign up now and start your free trial today!</p>
             </div>
             <div className="flex items-center justify-center w-full mt-16 delay-[300ms] duration-[600ms] taos:translate-y-[200px] taos:opacity-0" data-taos-offset="300">
                 <div className="flex items-center justify-between md:flex-row flex-col w-10/12">
-                    <div className="bg-white text-black flex items-center justify-between flex-col p-5 rounded-md h-[300px] border-r-[3px] border-b-[3px] border-yellow-theme md:w-5/12 w-10/12 text-center">
+                    <div className="bg-white text-black flex items-center justify-between flex-col p-5 rounded-md h-[300px] border-r-[3px] border-b-[3px] border-yellow-theme md:w-5/12 w-10/12 text-center" data-aos="fade-right">
                         <h1 className="font-bold text-2xl">Start your free trial</h1>
                         <p>Try our tool for free and see the difference it makes!</p>
                         <div className="text-center">
@@ -171,14 +177,14 @@ export default function Home() {
                         </div>
                         <ButtonTheme style="!text-xl" />
                     </div>
-                    <div className="bg-white text-black flex items-center justify-between flex-col p-5 rounded-md h-[300px] border-r-[3px] border-b-[3px] border-yellow-theme md:w-5/12 w-10/12 mt-5 text-center">
+                    <div className="bg-white text-black flex items-center justify-between flex-col p-5 rounded-md h-[300px] border-r-[3px] border-b-[3px] border-yellow-theme md:w-5/12 w-10/12 mt-5 text-center" data-aos="fade-left">
                         <h1 className="font-bold text-2xl">Need More?</h1>
                         <p>Need more? Contact us for a customized plan that fits your business needs.</p>
                         <ButtonTheme style="!text-xl !bg-black" text="Enterprise Plan" />
                     </div>
                 </div>
             </div>
-            <div className="w-full flex items-center justify-center" id="start">
+            <div className="w-full flex items-center justify-center" id="start" data-aos="zoom-in-up" >
                 <div className="w-10/12 bg-white text-black flex justify-between items-center flex-col py-10 mt-24 rounded-xl">
                     <h1 className="text-3xl font-bold">Let's create your account</h1>
 

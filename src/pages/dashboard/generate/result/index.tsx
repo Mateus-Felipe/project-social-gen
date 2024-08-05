@@ -36,6 +36,8 @@ export default function Home() {
             console.log(err);
             if (err.code == "ERR_NETWORK") {
                 setErrorMsg("Something bad happened!");
+            } else if (err.code == "ERR_BAD_REQUEST") {
+                setErrorMsg("Something bad happened!");
             } else if (err.response.data.message) {
                 setErrorMsg(err.response.data.message);
             } else {
@@ -73,7 +75,7 @@ export default function Home() {
                         </>
                     ) : editingPost && editingPost.id ? (
                         <>
-                            <PostEdit style="bg-white mdlg:w-4/12 w-[90%]" data={editingPost} handleCancel={ () => setEditingPost([])} />
+                            <PostEdit style="bg-white mdlg:w-4/12 w-[90%]" data={editingPost} handleCancel={() => setEditingPost([])} />
                         </>
                     ) : (
                         <div className="text-center text-white">

@@ -11,6 +11,7 @@ import { getCookie } from "@/services/cookies";
 import { headers } from "next/headers";
 import { profile } from "console";
 import { useRouter } from "next/router";
+import LoadingView from "@/components/loadingView";
 
 export default function Post() {
     const [themeInput, setThemeInput] = useState('')
@@ -52,6 +53,8 @@ export default function Post() {
         }).catch(err => {
             if (err.code == "ERR_NETWORK") {
                 setErrorMsg("An error occurred... Try again.")
+            } else if (err.code == "ERR_BAD_REQUEST") {
+                setErrorMsg("An error occurred... Try again.")
             }
             else if (err.response.data.message) {
                 setErrorMsg(err.response.data.message);
@@ -78,6 +81,8 @@ export default function Post() {
         }).catch(err => {
             console.log(err);
             if (err.code == "ERR_NETWORK") {
+                setErrorMsg("Something bad happened!");
+            } else if (err.code == "ERR_BAD_REQUEST") {
                 setErrorMsg("Something bad happened!");
             } else if (err.response.data.message) {
                 setErrorMsg(err.response.data.message);
@@ -219,10 +224,12 @@ export default function Post() {
                 </div>
             </div>
             {/* LOADING VIEW */}
-            <div className={` ${loading ? 'flex opacity-[0.97]' : 'hidden opacity-0'} fixed top-0 left-0 w-full h-screen z-50 bg-gradient-to-br
+            {/* PRECISO VER SE ISSO AINDA ESTÁ FUNCIONANDO */}
+            <LoadingView successMessage={successMessage} loading={loading} />
+            {/* <div className={` ${loading ? 'flex opacity-[0.97]' : 'hidden opacity-0'} fixed top-0 left-0 w-full h-screen z-50 bg-gradient-to-br
             ${successMessage ? 'from-green-300' : 'from-red-500'} ${successMessage ? 'to-blue-400' : 'to-yellow-700'} items-center justify-center`}>
                 <p className="font-bold text-white">{successMessage ? successMessage : 'Your post is being generated! ❤️'}</p>
-            </div>
+            </div> */}
         </div>
     );
 }

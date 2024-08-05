@@ -33,6 +33,8 @@ export default function Signup() {
             console.log(err)
             if (err.code == "ERR_NETWORK") {
                 setErrorMsg("An error occurred... Try again.")
+            } else if (err.code == "ERR_BAD_REQUEST") {
+                setErrorMsg("An error occurred... Try again.")
             }
             else if (err.response.data.message) {
                 setErrorMsg(err.response.data.message);
